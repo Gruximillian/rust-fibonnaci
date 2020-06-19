@@ -77,13 +77,13 @@ fn recursive_fibonnaci_number_at(n:u128) -> u128 {
         } else if pos == target {
             previous + current
         } else if pos == 0 {
-            calculate(target,pos + 1, 0, 0)
+            calculate(target, pos + 1, 0, 0)
         } else if pos == 1 {
-            calculate(target,pos + 1, 0, 1)
+            calculate(target, pos + 1, 0, 1)
         } else {
-            calculate(target,pos + 1, current, previous + current)
+            calculate(target, pos + 1, current, previous + current)
         }
     }
 
-    calculate(n,0, 0, 0)
+    calculate(n, 0, 0, 0)
 }
