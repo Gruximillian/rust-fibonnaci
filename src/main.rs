@@ -7,12 +7,14 @@ fn main() {
 
     let n = get_position();
     let result = fibonnaci_number_at(n);
+    let result_recursive = recursive_fibonnaci_number_at(n);
 
-    println!("Fibonnaci number at the postion {} is: {}", n, result);
+    println!("(for loop)  - Fibonnaci number at the postion {} is: {}", n, result);
+    println!("(recursive) - Fibonnaci number at the postion {} is: {}", n, result_recursive);
 }
 
-fn get_position() -> u64 {
-    let position:u64;
+fn get_position() -> u128 {
+    let mut position:u128;
 
     loop {
         println!("Enter the number position in the Fibonnaci sequence (n > 0):");
@@ -33,6 +35,13 @@ fn get_position() -> u64 {
             }
         };
 
+        if position > 186 {
+            // max position value is 186
+            // results with 332825110087067562321196029789634457848
+            println!("Too large value! Please try again with lower value of n. (n <= 186)");
+            continue;
+        }
+
         println!(" ");
         println!("You have selected the Fibonnaci number at the position: {}", position);
         break;
@@ -41,12 +50,40 @@ fn get_position() -> u64 {
     position
 }
 
-fn fibonnaci_number_at(n:u64) -> u64 {
+fn fibonnaci_number_at(n:u128) -> u128 {
+    let mut previous:u128 = 0;
+    let mut current:u128 = 1;
+    let mut temp:u128;
+
     if n == 0 {
-        n
-    } else {
-        // recursion is nice, but it appears that it ends with stack overflow for larger values of n
-        // simply too large number of recursions; for loop would probably work fine in that case
-        n + fibonnaci_number_at(n - 1)
+        return 0;
     }
+
+    for _number in 1..n {
+        temp = current;
+        current = previous + current;
+        previous = temp;
+    }
+
+    current
+}
+
+fn recursive_fibonnaci_number_at(n:u128) -> u128 {
+    fn calculate(target:u128, pos:u128, previous:u128, current:u128) -> u128 {
+        if target == 0 {
+            0
+        } else if target == 1 {
+            1
+        } else if pos == target {
+            previous + current
+        } else if pos == 0 {
+            calculate(target,pos + 1, 0, 0)
+        } else if pos == 1 {
+            calculate(target,pos + 1, 0, 1)
+        } else {
+            calculate(target,pos + 1, current, previous + current)
+        }
+    }
+
+    calculate(n,0, 0, 0)
 }
