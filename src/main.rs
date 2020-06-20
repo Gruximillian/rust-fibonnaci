@@ -1,4 +1,5 @@
 use std::io;
+use std::convert::TryInto;
 
 fn main() {
     println!(" ");
@@ -13,7 +14,7 @@ fn main() {
     println!("(recursive) - Fibonnaci number at the postion {} is: {}", n, result_recursive);
 }
 
-fn get_position() -> u128 {
+fn get_position() -> u8 {
     let mut position:u128;
 
     loop {
@@ -47,10 +48,10 @@ fn get_position() -> u128 {
         break;
     }
 
-    position
+    position.try_into().unwrap()
 }
 
-fn fibonnaci_number_at(n:u128) -> u128 {
+fn fibonnaci_number_at(n:u8) -> u128 {
     let mut previous:u128 = 0;
     let mut current:u128 = 1;
     let mut temp:u128;
@@ -68,8 +69,8 @@ fn fibonnaci_number_at(n:u128) -> u128 {
     current
 }
 
-fn recursive_fibonnaci_number_at(n:u128) -> u128 {
-    fn calculate(target:u128, pos:u128, previous:u128, current:u128) -> u128 {
+fn recursive_fibonnaci_number_at(n:u8) -> u128 {
+    fn calculate(target:u8, pos:u8, previous:u128, current:u128) -> u128 {
         if target == 0 {
             0
         } else if target == 1 {
